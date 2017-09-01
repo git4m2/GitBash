@@ -21,6 +21,24 @@
 clear
 
 
+# USERNAME
+username=`git config user.name`
+
+
+# DISPLAY DATA
+#echo ""
+#echo "Username: $username"
+
+
+# PAUSE
+#echo ""
+#read -p "Press any key to continue... " -n 1 -s
+
+
+# EXIT SCRIPT
+#exit 1
+
+
 # CONFIRM VERSION
 echo ""
 read -p "Type a version number: " ver
@@ -86,6 +104,10 @@ if [ "$localExists" = "fatal" ]; then
 fi
 
 
+# USERNAME
+#username=`git config user.name`
+
+
 # DETERMINE IF PROJECT EXISTS IN REMOTE REPOSITORY (i.e. GitHub)
 #Example...
 #From https://github.com/git4m2/<PROJECTNAME>.git
@@ -145,6 +167,14 @@ if [ "$remoteExists" = "fatal" ]; then
         echo ""
         echo "Project name \"$projectName\" confirmed."
     fi
+
+    echo ""
+    echo "Create remote Git repository \"$projectName\" with account \"$username\"."
+    curl -u "$username" https://api.github.com/user/repos -d "{ \"name\": \"$projectName\" }"
+
+    echo ""
+    echo "Add project to remote repository..."
+    git remote add origin https://github.com/$username/$projectName.git
 else
     echo ""
     echo "Remote project does exist."
@@ -152,13 +182,13 @@ fi
 
 
 # PROCESSING
-username=`git config user.name`
+#username=`git config user.name`
 
-if [ "$remoteExists" = "fatal" ]; then
-    echo ""
-    echo "Create remote Git repository \"$projectName\" with account \"$username\"."
-    curl -u "$username" https://api.github.com/user/repos -d "{ \"name\": \"$projectName\" }"
-fi
+#if [ "$remoteExists" = "fatal" ]; then
+    #echo ""
+    #echo "Create remote Git repository \"$projectName\" with account \"$username\"."
+    #curl -u "$username" https://api.github.com/user/repos -d "{ \"name\": \"$projectName\" }"
+#fi
 
 echo ""
 echo "Repository Status..."
@@ -179,11 +209,11 @@ echo "Tag Files (local repo)..."
 git tag -a "v$ver" -m "$ver"
 #git status
 
-if [ "$remoteExists" = "fatal" ]; then
-    echo ""
-    echo "Add project to remote repository..."
-    git remote add origin https://github.com/$username/$projectName.git
-fi
+#if [ "$remoteExists" = "fatal" ]; then
+    #echo ""
+    #echo "Add project to remote repository..."
+    #git remote add origin https://github.com/$username/$projectName.git
+#fi
 
 echo ""
 echo "Push Files (remote repo)..."
