@@ -1,21 +1,28 @@
 #!/bin/bash
 
-# Example Steps...
-# 1. Input version: 14.1
-# 2. Input description: OOPs! Refactor (end of video @ 14:10)
+# Sample Steps...
+# 1. Input version: 1.3.7
+# 2. Input description: Refactor Code
 # 3. git status
 # 4. git add index.html
-# 5. git commit -m "v14.1 - OOPs! Refactor (end of video @ 14:10)"
-# 6. git tag -a "v14.1" -m "14.1"
+# 5. git commit -m "v1.3.7 - Refactor Code"
+# 6. git tag -a "v1.3.7" -m "1.3.7"
 # 7. git push origin master
-# 8. git push origin v14.1
+# 8. git push origin v1.3.7
 
-# Note 7: If the origin does not yet exist, you may create it using cURL.
-# ex. curl -u "git4m2" https://api.github.com/user/repos -d "{ \"name\": \"GitBash\" }"
+# Note for Step 7: If the origin does not yet exist, you may create it using cURL.
+# 
+# Basic Authentication
+# curl -u "git4m2" https://api.github.com/user/repos -d "{ \"name\": \"GitBash\" }"
+# 
+# 2FA (using One-Time Password from smartphone app)
+# curl -u "git4m2" -H "X-GitHub-OTP:123456" https://api.github.com/user/repos -d "{ \"name\": \"GitBash\" }"
+# 
 # Remember to add the origin:
-# ex. git remote add origin https://github.com/git4m2/GitBash.git
+# git remote add origin https://github.com/git4m2/GitBash.git
+# 
 # Push existing repository:
-# ex. git push -u origin master
+# git push -u origin master
 
 
 clear
@@ -90,8 +97,9 @@ fi
 
 
 # PARSE LOCAL PROJECT DIRECTORY PATH INTO ARRAY
-#localProjectDirPath="C:/Projects/<PROJECTNAME>"
-#localProjectDirPath="fatal: Not a git repository (or any of the parent directories): .git"
+# example1: localProjectDirPath="C:/Projects/<PROJECTNAME>"
+# example2: localProjectDirPath="fatal: Not a git repository (or any of the parent directories): .git"
+
 localProjectDirPath=`git rev-parse --show-toplevel 2>&1`
 IFS=':' read -r -a array <<< "$localProjectDirPath"
 localExists=${array[0]}
@@ -104,17 +112,15 @@ if [ "$localExists" = "fatal" ]; then
 fi
 
 
-# USERNAME
-#username=`git config user.name`
-
-
 # DETERMINE IF PROJECT EXISTS IN REMOTE REPOSITORY (i.e. GitHub)
+
 #Example...
 #From https://github.com/git4m2/<PROJECTNAME>.git
 #5380a81b26547fa5adb3ae05219a283be9ab87d8        HEAD
 #5380a81b26547fa5adb3ae05219a283be9ab87d8        refs/heads/master
 #cd212bcce27a117f00d99b47029ab6f701835cb9        refs/tags/v1.0
 #5380a81b26547fa5adb3ae05219a283be9ab87d8        refs/tags/v1.0^{}
+
 #Alternatively...
 #fatal: No remote configured to list refs from.
 remoteExists=`git ls-remote --exit-code 2>&1`
@@ -170,7 +176,16 @@ if [ "$remoteExists" = "fatal" ]; then
 
     echo ""
     echo "Create remote Git repository \"$projectName\" with account \"$username\"."
-    curl -u "$username" https://api.github.com/user/repos -d "{ \"name\": \"$projectName\" }"
+
+    echo ""
+    read -s -p "Type the 2FA One-Time Password from your app: " otpCode # -s switch... Do not echo data entry
+	#echo "2FA One-Time Password: $otpCode"
+
+	# Basic Authentication
+    #curl -u "$username" https://api.github.com/user/repos -d "{ \"name\": \"$projectName\" }"
+
+	# 2FA OTP (using One-Time Password from smartphone app)
+	curl -u "$username" -H "X-GitHub-OTP:$otpCode" https://api.github.com/user/repos -d "{ \"name\": \"$projectName\" }"
 
     echo ""
     echo "Add project to remote repository..."
@@ -182,14 +197,6 @@ fi
 
 
 # PROCESSING
-#username=`git config user.name`
-
-#if [ "$remoteExists" = "fatal" ]; then
-    #echo ""
-    #echo "Create remote Git repository \"$projectName\" with account \"$username\"."
-    #curl -u "$username" https://api.github.com/user/repos -d "{ \"name\": \"$projectName\" }"
-#fi
-
 echo ""
 echo "Repository Status..."
 git status
@@ -207,23 +214,14 @@ git commit -m "$commitMsg"
 echo ""
 echo "Tag Files (local repo)..."
 git tag -a "v$ver" -m "$ver"
-#git status
-
-#if [ "$remoteExists" = "fatal" ]; then
-    #echo ""
-    #echo "Add project to remote repository..."
-    #git remote add origin https://github.com/$username/$projectName.git
-#fi
 
 echo ""
 echo "Push Files (remote repo)..."
 git push -u origin master
-#git status
 
 echo ""
 echo "Push Tags (remote repo)..."
 git push origin "v$ver" --tags
-#git status
 
 echo ""
 echo "Commit, tag and push to remote repository complete."
