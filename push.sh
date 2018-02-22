@@ -181,6 +181,10 @@ if [ "$remoteExists" = "fatal" ]; then
     read -s -p "Type the 2FA One-Time Password from your app: " otpCode # -s switch... Do not echo data entry
 	#echo "2FA One-Time Password: $otpCode"
 
+	# Create a line break between "2FA One-Time Password" and curl command.
+	echo ""
+	echo ""
+
 	# Basic Authentication
     #curl -u "$username" https://api.github.com/user/repos -d "{ \"name\": \"$projectName\" }"
 
