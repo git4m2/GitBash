@@ -6,6 +6,18 @@ All  changes to this project will be documented in this file.
 <br/><br/>
 
 
+## [v3.0.2] - 2018-02-22
+### Forgot to modify Changelog
+- Forgot to modify Changelog at 3.0.1 update.
+<br/><br/>
+
+
+## [v3.0.1] - 2018-02-22
+### Added line break between 2FA and password entry
+- Create a line break between "2FA One-Time Password" and curl command.
+<br/><br/>
+
+
 ## [v3.0.0] - 2017-12-20
 ### Added 2FA
 - Added 2FA OTP (using One-Time Password from smartphone app).
