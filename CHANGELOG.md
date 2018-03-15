@@ -6,6 +6,13 @@ All  changes to this project will be documented in this file.
 <br/><br/>
 
 
+## [v3.0.3] - 2018-03-15
+### Refactor Code and Add Notes
+- Adjusted script.
+- Included note regarding "right-click" mouse (versus Ctrl+V) to paste "Basic Authentication" password.
+<br/><br/>
+
+
 ## [v3.0.2] - 2018-02-22
 ### Forgot to modify Changelog
 - Forgot to modify Changelog at 3.0.1 update.

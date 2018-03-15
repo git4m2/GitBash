@@ -15,11 +15,19 @@ C:\Projects\MyProject>
 Type command "./push.sh"
 C:\Projects\MyProject>./push.sh
 
-2FA OTP (using One-Time Password from smartphone app)
 Upon script initiation, you will be prompted to supply the following:
-One-Time Password (from smartphone app)
-Password (associated with Login ID)
+
+1) Two-Factor Authentication One-Time Password (2FA OTP from smartphone app)
+
+2) Basic Authentication Password (associated with Login ID)
 
 Upon authentication, the scripts will complete.
 ```
 
+##### Note1: 2FA One-Time Password (from smartphone app)
+You will type in this password.
+
+##### Note2: Basic Authentication Password (associated with Login ID)
+You must right-click mouse (versus Ctrl+V) to paste 
+"Basic Authentication" password into GitBash console 
+in order for password to be successfully accepted.

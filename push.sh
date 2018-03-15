@@ -177,6 +177,10 @@ if [ "$remoteExists" = "fatal" ]; then
     echo ""
     echo "Create remote Git repository \"$projectName\" with account \"$username\"."
 
+	# Basic Authentication
+    #curl -u "$username" https://api.github.com/user/repos -d "{ \"name\": \"$projectName\" }"
+
+	# 2FA Authentication
     echo ""
     read -s -p "Type the 2FA One-Time Password from your app: " otpCode # -s switch... Do not echo data entry
 	#echo "2FA One-Time Password: $otpCode"
@@ -185,11 +189,12 @@ if [ "$remoteExists" = "fatal" ]; then
 	echo ""
 	echo ""
 
-	# Basic Authentication
-    #curl -u "$username" https://api.github.com/user/repos -d "{ \"name\": \"$projectName\" }"
-
 	# 2FA OTP (using One-Time Password from smartphone app)
 	curl -u "$username" -H "X-GitHub-OTP:$otpCode" https://api.github.com/user/repos -d "{ \"name\": \"$projectName\" }"
+	
+	# Note: 
+	# Must right-click mouse (versus Ctrl+V) to paste "Basic Authentication" password into GitBash console in order for password to be successfully accepted.
+	# Using Ctrl+V to paste the password will fail!
 
     echo ""
     echo "Add project to remote repository..."
