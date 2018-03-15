@@ -6,6 +6,13 @@ All  changes to this project will be documented in this file.
 <br/><br/>
 
 
+## [v3.0.4] - 2018-03-15
+### Added Personal Access Tokens reference graphics
+- Added "Personal Access Tokens - GitHub.jpg" to source files.
+- Added "Personal Access Tokens - Windows Credentials Manager.jpg" to source files.
+<br/><br/>
+
+
 ## [v3.0.3] - 2018-03-15
 ### Refactor Code and Add Notes
 - Adjusted script.
