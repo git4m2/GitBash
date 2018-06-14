@@ -6,6 +6,12 @@ All  changes to this project will be documented in this file.
 <br/><br/>
 
 
+## [v3.0.5] - 2018-06-14
+### Modified README file
+- Changed structure of README.md file.
+<br/><br/>
+
+
 ## [v3.0.4] - 2018-03-15
 ### Added Personal Access Tokens reference graphics
 - Added "Personal Access Tokens - GitHub.jpg" to source files.
